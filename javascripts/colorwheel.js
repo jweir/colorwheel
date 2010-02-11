@@ -1,4 +1,4 @@
-(function(){
+Raphael.colorwheel = function(target, color_wheel_size){
   var canvas,
       current_color,
       size,
@@ -11,17 +11,27 @@
       center,
       parent,
       change_callback,
-      offset;
+      drag_callbacks = [function(){}, function(){}],
+      offset,
+      padding = 2,
+      sdim; // holds the dimensions for the saturation square
 
-  var padding = 2;
-  var sdim; // holds the dimensions for the saturation square
+  var pi  = 22/7;
 
-  Raphael.colorpicker = function(target, s){
-    size = s;
+  function point(x, y){ return {x:x, y:y}}
+  function radians(a){ return a * (pi/180) }
+
+  function angle(x,y){
+    var q = x > 0 ? 0 : 180;
+    return q+Math.atan((0 - y)/(0 - x))*180/(22/7)
+  }
+
+  function create(target, color_wheel_size){
+    size     = color_wheel_size;
     tri_size = size/20;
-    center = size/2;
-    parent = $("#"+target);
-    canvas = Raphael(parent[0],size, size);
+    center   = size/2;
+    parent   = target;
+    canvas   = Raphael(parent[0],size, size);
     canvas.safari();
 
     create_bs_square();
@@ -30,12 +40,20 @@
     bs_square.cursor = cursor_create(tri_size*0.5);
     events_setup();
     parent.css({height:size+"px", width:size+"px"});
+
+    return public_methods();
+  }
+
+  function public_methods(){
     return {
       input: input,
-      onchange: onchange
+      onchange: onchange,
+      ondrag : ondrag,
+      color : set_color
     }
   }
 
+  // Sets a textfield for user input of hex color values
   function input(target){
     change_callback = null;
     input_target = target;
@@ -47,6 +65,16 @@
         }
     });
     set_color(target.value);
+  }
+
+  // Sets a callback for when any change occurs
+  function onchange(callback){
+    change_callback = callback;
+    update_color(false);
+  }
+
+  function ondrag(start_callback, end_callback){
+    drag_callbacks = [start_callback || function(){}, endcallback || function(){}]
   }
 
   function drag(e){
@@ -71,14 +99,14 @@
     drag_target = target;
     drag(event);
     // TODO add callback here
-    $("body").addClass("no-select");
+    drag_callbacks[0](current_color)
   }
 
   function stop_drag(){
     $(document).unbind("mouseup",stop_drag);
     $(document).unbind("mousemove",drag);
     // TODO add callback here
-    $("body").removeClass("no-select");
+    drag_callbacks[1](current_color)
   }
 
   function event_drag_stop(event,o){
@@ -121,6 +149,9 @@
   }
 
   function set_color(value){
+    if(value === undefined){
+      return current_color;
+    }
     var temp = canvas.rect(1,1,1,1).attr({fill:value}),
         hsb = canvas.raphael.rgb2hsb(temp.attr("fill"));
         yy = hsb
@@ -129,6 +160,7 @@
       sdim.l/2 - (sdim.l*hsb.b));
     set_hue_cursor((360*(hsb.h))-90);
     temp.remove();
+    return current_color;
   }
 
   // Could optimize this method
@@ -140,7 +172,7 @@
           s: (x-sdim.x)/sdim.l,
           h: hue()
         };
-    current_color = Raphael.getRGB("hsb("+hsb.h+","+hsb.s+","+hsb.b+")").hex
+    current_color = Raphael.getRGB("hsb("+hsb.h+","+hsb.s+","+hsb.b+")");
 
     if(input_target){
       var c = Raphael.getRGB("hsb("+hsb.h+","+hsb.s+","+hsb.b+")").hex;
@@ -156,27 +188,6 @@
     if(change_callback != undefined){
       change_callback(current_color);
     }
-  }
-
-  function onchange(callback){
-    change_callback = callback;
-  }
-
-
-  function point(x, y){
-    return {x:x, y:y}
-  }
-
-  function angle(x,y){
-    var q = x > 0 ? 0 : 180;
-
-    return q+Math.atan((0 - y)/(0 - x))*180/(22/7)
-  }
-
-  var pi  = 22/7;
-
-  function radians(a){
-    return a * (pi/180)
   }
 
   // accepts either x,y or d (degrees)
@@ -215,25 +226,28 @@
     bs_square.b.node.style.cursor = "crosshair";
   }
 
-  // TODO draw the proper number of segments
+  function hue_segement_shape(){
+    var path = "M -@W 0 L @W 0 L @W @H L -@W @H z";
+    return path.replace(/@H/img, tri_size*2).replace(/@W/img,tri_size);
+  }
+
+  function copy_segment(r, d, k){
+    var n = r.clone();
+    var hue = d*(255/k);
+
+    n.rotate((360/k)*d, (size/2), size/2);
+    n.attr({fill:"hsb("+d*(255/k)+", 255, 200)"})
+    hue_ring.hues.push(n)
+  }
+
   function create_hue_ring(){
-    var s = "M -@W 0 L @W 0 L @W @H L -@W @H z";
-    s = s.replace(/@H/img, tri_size*2).replace(/@W/img,tri_size);
-    var tri = canvas.path(s).attr({stroke:null}).translate(size/2, padding);
-    var k = 60; // # of segments to use to generate the hues
+    var s = hue_segement_shape(),
+        tri = canvas.path(s).attr({stroke:null}).translate(size/2, padding),
+        k = 60; // # of segments to use to generate the hues
 
     hue_ring.hues = canvas.set();
 
-    function copy(r, d){
-      var n = r.clone();
-      n.rotate((360/k)*d, (size/2), size/2);
-      var hue = d*(255/k);
-      n.attr({fill:"hsb("+d*(255/k)+", 255, 200)"})
-      hue_ring.hues.push(n)
-    }
-    for(n=0; n<k; n++){
-      copy(tri, n);
-    }
+    for(n=0; n<k; n++){ copy_segment(tri, n, k); }
 
     // IE needs a slight opacity to assign events
     hue_ring.event = canvas.circle(
@@ -248,4 +262,6 @@
     hue_ring.outline.toBack();
     hue_ring.event.node.style.cursor = "crosshair";
   }
-})();
+
+  return create(target, color_wheel_size);
+};

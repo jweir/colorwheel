@@ -9,30 +9,140 @@
 	<script src="javascripts/jquery-1.4.1.min.js" type="text/javascript"></script>
   <script src="javascripts/raphael-min.js" type="text/javascript"></script>
   <script src="javascripts/colorwheel.js" type="text/javascript"></script>
+  <style type="text/css" media="screen">
+    body {
+      margin:20px;
+      background:#EFEFEE;
+      font:14px/20px helvetica, arial;
+    }
+    input {
+      font-family: monospace;
+      font-size:16px;
+    }
+    .swatch {
+      padding:10px;
+    }
+    .method {
+      margin-bottom:10px;
+    }
+    .code p{margin:0; padding:0; display:none;}
+
+    .source {
+      font-size:10px;
+      line-height:14px;
+    }
+    
+    .example {
+      margin:20px 0;
+    }
+    
+    code {
+      display:none;
+    }
+    
+    .show_source {
+      color:#6699FF;
+      text-decoration:underline;
+      cursor:pointer;
+    }
+    
+    
+  </style>
 </head>
 
-<body style="margin:0; padding:0">
-    <div id="picker_a" style="text-align:left; left:0px; top:0px;"></div>
-    <input type="text" id="picker_a_input" value="#FFFF00"/>
-    <div id="picker_a_log">This will get updated when you change the above color</div>
-    
-    <div id="picker_b" style="text-align:left; left:0px; top:0px;"></div>
-    <input type="text" id="picker_b_input" value="#FFFF00"/>
-    <div id="picker_b_log">This will get updated when you change the above color</div>
-    
-    <script>
-      $(document).ready(function(){
-        var picker_a = Raphael.colorpicker("picker_a", 200);
-        picker_a.input($("#picker_a_input")[0])
-        picker_a.onchange(function(hex){
-          $("#picker_a_log").css("background",hex)
-        })
+<body>
+    <div class="demo">
+      <h1>Colorwheel Demo</h1>
+      <div class="code">
+        <div class="method">
+        <b>var cw = Raphael.colorwheel(jQuery, height_width);</b>
+        </div>
+          
+        <div class="method">
+        <b>cw.input(DOMElement)</b>
+        <div>Sets a text input for setting and receiving the color as a hex value</div>
+        </div>
 
-        var picker_b = Raphael.colorpicker("picker_b", 200);
-        picker_b.input($("#picker_b_input")[0])
-        picker_b.onchange(function(hex){
-          $("#picker_b_log").css("background",hex)
-        })
+        <div class="method">
+        <b>cw.onchange(callback)</b>
+        <div>Set a callback for any change received.  Callback takes one argument, a Rapahel RGB color object.</div>
+        </div>
+
+        <div class="method">
+        <b>cw.ondrag(start, stop)</b>
+        <div>Set a start and stop callback for dragging. Callbacks takes one argument, a Rapahel RGB color object.</div>
+        </div>
+
+        <div class="method">
+        <b>cw.color()</b>
+        <div>Get the current color as RGB object</div>
+        </div>
+
+        <div class="method">
+        <b>cw.color(hex_value)</b>
+        <div>Set the current color via a hex value</div>
+        </div>
+      </div>
+
+      <div id="cycle_example" class="example">
+        <h2>A more advanced callback</h2>
+        <div class="demo">
+          <div class="colorwheel" style="text-align:left;"></div>
+          <div class="cycle" style="padding:5px; background:#FFF; margin:10px 0; font-size:18px; font-weight:bold">These letters will get cycled through... and through...</div>
+        </div>
+        <b class="show_source">Show Source</b>
+        <code><pre class="source"></pre></code>
+        
+      </div>
+
+
+    <script>
+
+      function show_source(target){
+        target.slideDown();
+      }
+
+      function set_source(f, target){
+        target.text(f.toString())
+      }
+
+function cycle_example(){
+  var position = 0,
+      letters = [],
+      colorwheel;
+
+
+  function setup_the_letters(){
+    var cycle = $(".cycle"),
+        l = cycle.text().split("");
+
+    cycle.html("");
+
+    for (var i=0; i < l.length; i++) {
+      var letter = $("<span>"+l[i]+"</span>");
+      cycle.append(letter);
+      letters.push(letter);
+    };
+  }
+
+  function update(color){
+    position++;
+    if(position > letters.length-1){ position = 0; }
+    letters[position].css("color", color.hex);
+  }
+
+  colorwheel = Raphael.colorwheel($("#cycle_example .colorwheel"),200);
+  setup_the_letters();
+  colorwheel.onchange(update);
+  colorwheel.color("#000");
+}
+
+      $(document).ready(function(){
+        cycle_example();
+        set_source(cycle_example, $("#cycle_example .source"))
+        $(".show_source").click(function(){
+          $(this).parents().filter('.example').find("code").slideDown();
+        });
       })
     </script>
 </body>
