@@ -9,12 +9,18 @@
 	<script src="javascripts/jquery-1.4.1.min.js" type="text/javascript"></script>
   <script src="javascripts/raphael-min.js" type="text/javascript"></script>
   <script src="javascripts/colorwheel.js" type="text/javascript"></script>
+
   <style type="text/css" media="screen">
     body {
-      margin:20px;
       background:#EFEFEE;
       font:14px/20px helvetica, arial;
-      width:800px;
+      text-align:center;
+      margin:40px;
+    }
+    .demo {
+      text-align:left;
+      width:600px;
+      margin:0 auto;
     }
     input {
       font-family: monospace;
@@ -24,7 +30,7 @@
       padding:10px;
     }
     .method {
-      margin-bottom:10px;
+      margin-bottom:20px;
     }
     .code p{margin:0; padding:0; display:none;}
 
@@ -38,7 +44,10 @@
       padding:10px 0;
       border-top:2px #CCC solid;
     }
-
+    h2 {
+      font-size:16px;
+    }
+    
     .example h2, .example p {
       margin:0 0 10px;
     }
@@ -64,11 +73,13 @@
       <h1>Colorwheel</h1>
       <p>A color picker coded using <a href="http://raphaeljs.com/">Raphael</a> and <a href="http://jquery.com">jQuery</a>.  The wheel is drawn using the Raphael js library, and jQuery is used to assist with events.</p>
       <p>The wheel can be resized, since it is drawn on the fly. It supports a small set of callbacks.</p>
+      <p>It was created for the UI at <a href="http://famedriver.com">Fame Driver</a> and distributed with a MIT license. </p>
+      <p>Hope you enjoy it – John Weir</p>
       <div class="code">
         <h2>Usage and methods</h2>
         <div class="method">
-        <b>var cw = Raphael.colorwheel(dom_element, height_width);</b>
-        <div>The wheel is drawn into a square, so only one dimension is required</div>
+        <b>var cw = Raphael.colorwheel(dom_element, height_width [, segments]);</b>
+        <div>The wheel is drawn into a square, so only one dimension is required. <b>segments</b> is an option to increase, or decrease, the smoothness of the hue ring. 60 is the default.</div>
         </div>
 
         <div class="method">
@@ -127,7 +138,7 @@
 
       <div id="size_example" class="example">
         <h2>Sizes</h2>
-        <p>The wheel can be scaled to suit your needs</p>
+        <p>The wheel can be scaled to suit your needs.  The large ring has larger number of segements, to make it smoother.</p>
         <div class="demo" style="float:left; width:100%">
           <div class="colorwheel_small" style="text-align:left; float:left;margin-right:30px; margin-top:125px"></div>
           <div class="colorwheel_large" style="text-align:left; float:left;margin-right:30px; float:left;"></div>
@@ -164,7 +175,7 @@
 function size_example(){
   Raphael.colorwheel($("#size_example .colorwheel_small")[0],50).color("#F00");
   Raphael.colorwheel($("#size_example .colorwheel_medium")[0],150).color("#0F0");
-  Raphael.colorwheel($("#size_example .colorwheel_large")[0],300).color("#00F");
+  Raphael.colorwheel($("#size_example .colorwheel_large")[0],300, 180).color("#00F");
 }
 
 function input_example(){
@@ -231,91 +242,5 @@ function cycle_example(){
         });
       })
     </script>
-</body>
-</html>
-=======
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-
-	<title>jweir/colorwheel @ GitHub</title>
-	
-	<style type="text/css">
-		body {
-  		margin-top: 1.0em;
-  		background-color: #ffffff;
-		  font-family: "Helvetica,Arial,FreeSans"; 
-  		color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-		h1 { font-size: 3.8em; color: #000000; margin-bottom: 3px; }
-		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #000000; }
-    h3 { text-align: center; color: #000000; }
-    a { color: #000000; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-		pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-	</style>
-	
-</head>
-
-<body>
-  <a href="http://github.com/jweir/colorwheel"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-  
-  <div id="container">
-
-    <div class="download">
-      <a href="http://github.com/jweir/colorwheel/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/jweir/colorwheel/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-      
-    <h1><a href="http://github.com/jweir/colorwheel">colorwheel</a> 
-      <span class="small">by <a href="http://github.com/jweir">jweir</a></span></h1>
-
-    <div class="description">
-      A scaleable color picker implemented using Raphael and JQuery
-    </div>
-
-    <h2>Dependencies</h2>
-<p>raphael and jquery</p>
-<h2>Authors</h2>
-<p>J. Weir (john@smokingun.com)
-<br/>
-<br/>      </p>
-<h2>Contact</h2>
-<p>J. Weir (john@smokinggun.com)
-<br/>      </p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/jweir/colorwheel/zipball/master">zip</a> or
-      <a href="http://github.com/jweir/colorwheel/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/jweir/colorwheel</pre>
-    </p>
-      
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/jweir/colorwheel">jweir/colorwheel</a>
-    </div>
-    
-  </div>
-
-  
 </body>
 </html>

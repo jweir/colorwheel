@@ -1,7 +1,14 @@
-Raphael.colorwheel = function(target, color_wheel_size){
+/*
+* Colorwheel 
+* Copyright (c) 2010 John Weir (http://famedriver.com)
+* Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
+*/
+
+Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   var canvas,
       current_color,
       size,
+      segments = no_segments || 60,
       bs_square = {},
       hue_ring = {},
       tri_size,
@@ -244,7 +251,7 @@ Raphael.colorwheel = function(target, color_wheel_size){
   function create_hue_ring(){
     var s = hue_segement_shape(),
         tri = canvas.path(s).attr({stroke:null}).translate(size/2, padding),
-        k = 60; // # of segments to use to generate the hues
+        k = segments; // # of segments to use to generate the hues
 
     hue_ring.hues = canvas.set();
 
