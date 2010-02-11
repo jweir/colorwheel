@@ -30,7 +30,7 @@ Raphael.colorwheel = function(target, color_wheel_size){
     size     = color_wheel_size;
     tri_size = size/20;
     center   = size/2;
-    parent   = target;
+    parent   = $(target);
     canvas   = Raphael(parent[0],size, size);
     canvas.safari();
 
@@ -65,6 +65,7 @@ Raphael.colorwheel = function(target, color_wheel_size){
         }
     });
     set_color(target.value);
+    update_color(true);
   }
 
   // Sets a callback for when any change occurs
@@ -74,7 +75,7 @@ Raphael.colorwheel = function(target, color_wheel_size){
   }
 
   function ondrag(start_callback, end_callback){
-    drag_callbacks = [start_callback || function(){}, endcallback || function(){}]
+    drag_callbacks = [start_callback || function(){}, end_callback || function(){}]
   }
 
   function drag(e){
