@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Color Wheel Demo</title>
+	<script src="javascripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+  <script src="javascripts/raphael-min.js" type="text/javascript"></script>
+  <script src="javascripts/colorwheel.js" type="text/javascript"></script>
+</head>
+
+<body style="margin:0; padding:0">
+    <div id="picker_a" style="text-align:left; left:0px; top:0px;"></div>
+    <input type="text" id="picker_a_input" value="#FFFF00"/>
+    <div id="picker_a_log">This will get updated when you change the above color</div>
+    
+    <div id="picker_b" style="text-align:left; left:0px; top:0px;"></div>
+    <input type="text" id="picker_b_input" value="#FFFF00"/>
+    <div id="picker_b_log">This will get updated when you change the above color</div>
+    
+    <script>
+      $(document).ready(function(){
+        var picker_a = Raphael.colorpicker("picker_a", 200);
+        picker_a.input($("#picker_a_input")[0])
+        picker_a.onchange(function(hex){
+          $("#picker_a_log").css("background",hex)
+        })
+
+        var picker_b = Raphael.colorpicker("picker_b", 200);
+        picker_b.input($("#picker_b_input")[0])
+        picker_b.onchange(function(hex){
+          $("#picker_b_log").css("background",hex)
+        })
+      })
+    </script>
+</body>
+</html>
