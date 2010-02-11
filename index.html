@@ -18,10 +18,20 @@
       margin:40px;
       color:#666;
     }
+    
+    a {
+      color:#F60;
+    }
+    
     .demo {
       text-align:left;
       width:600px;
       margin:0 auto;
+      padding:20px;
+      background:#FFFFEE;
+      -moz-box-shadow: #a6a6a6 0px 0px 4px;
+      box-shadow: #a6a6a6 0px 0px 4px;
+      -webkit-box-shadow: #a6a6a6 0px 0px 4px; }
     }
     input {
       font-family: monospace;
@@ -40,7 +50,7 @@
       line-height:14px;
     }
 
-    .example {
+    .example, .code {
       margin:10px 0;
       padding:10px 0;
       border-top:2px #CCC solid;
@@ -48,11 +58,23 @@
     h2 {
       font-size:16px;
     }
-    
+    h1 {
+      color:#000;
+    }
     .example h2, .example p {
       margin:0 0 10px;
     }
-
+     .example p {
+       width:300px;
+     }
+    .method b {
+      color:#2e5478;
+    }
+    
+    .method div {
+      width:400px;
+    }
+    
     code {
       display:none;
       background:#FFF;
@@ -60,7 +82,8 @@
     }
 
     .show_source {
-      color:#336699;
+      margin:20px 0 0;
+      color:#999;
       text-decoration:underline;
       cursor:pointer;
     }
@@ -72,10 +95,11 @@
 <body>
     <div class="demo">
       <h1>Colorwheel</h1>
-      <p>A color picker coded using <a href="http://raphaeljs.com/">Raphael</a> and <a href="http://jquery.com">jQuery</a>.  The wheel is drawn using the Raphael js library, and jQuery is used to assist with events.</p>
-      <p>The wheel can be resized, since it is drawn on the fly. It supports a small set of callbacks.</p>
+      <p>A color picker coded using <a href="http://raphaeljs.com/">Raphael</a> and 
+        <a href="http://jquery.com">jQuery</a>.  The wheel is drawn using the Raphael js library. jQuery is used to assist with events.</p>
+      <p>The wheel size is set on creation. It supports a small set of callbacks.</p>
       <p>It was created for the UI at <a href="http://famedriver.com">Fame Driver</a> and distributed with a MIT license. </p>
-      <p>Hope you enjoy it – John Weir</p>
+      <p>Hope you enjoy it <em>– <a href="mailto:john@famedriver.com">John Weir</a></em></p>
       <div class="code">
         <h2>Usage and methods</h2>
         <div class="method">
@@ -90,12 +114,12 @@
 
         <div class="method">
         <b>cw.onchange(callback)</b>
-        <div>Set a callback for any change received.  Callback takes one argument, a Rapahel RGB color object.</div>
+        <div>Set a callback for any change received.  Callback takes one argument, a Raphael RGB color object.</div>
         </div>
 
         <div class="method">
         <b>cw.ondrag(start, stop)</b>
-        <div>Set a start and stop callback for dragging. Callbacks takes one argument, a Rapahel RGB color object.</div>
+        <div>Set a start and stop callback for dragging. Callbacks takes one argument, a Raphael RGB color object.</div>
         </div>
 
         <div class="method">
@@ -113,51 +137,56 @@
         <h2>Input</h2>
         <p>Assigning an input to a colorwheel will allow the user to directly change the hex color value.</p>
         <p>When the input is set the colorwheel will set its color to the inputs value</p>
-        <div class="demo">
-          <div class="colorwheel" style="text-align:left;"></div>
-          <input name="input_example" value="#FF9900" size="7">
+        <div>
+          <div style="float:left; width:100%; margin-bottom:20px">
+            <div class="colorwheel" style="float:left; margin-right:20px; width:300px; text-align:left;"></div>
+            <div style="float:left; width:50%">
+              <input name="input_example" value="#FF9900" size="7"><br/>
+              Enter a hex value above
+            </div>
+          </div>
         </div>
-        <b class="show_source">Show Source</b>
+        <div class="show_source">Show Source</div>
         <code><pre class="source"></pre></code>
       </div>
 
       <div id="callback_example" class="example">
         <h2>Callbacks</h2>
         <p>When the color is changed a callback is used to change the colors of each letter below.</p>
-        <div class="demo">
+        <div >
           <div style="float:left; width:100%; margin-bottom:20px">
             <div class="colorwheel" style="float:left; margin-right:20px; width:300px; text-align:left;"></div>
             <div style="float:left; width:50%">
-              <div class="onchange" style="padding:5px;"></div>
-              <div class="ondrag" style="display:none; padding:5px;">You are dragging the wheel</div>
+              <span class="onchange" style="padding:5px; color:#FFF"></span>
+              <div class="ondrag" style="display:none;"><b>You are dragging the wheel</b></div>
             </div>
           </div>
         </div>
-        <b class="show_source">Show Source</b>
+        <div class="show_source">Show Source</div>
         <code><pre class="source"></pre></code>
       </div>
 
       <div id="size_example" class="example">
         <h2>Sizes</h2>
-        <p>The wheel can be scaled to suit your needs.  The large ring has larger number of segements, to make it smoother.</p>
-        <div class="demo" style="float:left; width:100%">
+        <p>The wheel can be scaled to suit your needs.  The large ring has larger number of segments, to make it smoother.</p>
+        <div style="float:left; width:100%">
           <div class="colorwheel_small" style="text-align:left; float:left;margin-right:30px; margin-top:125px"></div>
           <div class="colorwheel_large" style="text-align:left; float:left;margin-right:30px; float:left;"></div>
           <div class="colorwheel_medium" style="text-align:left; margin-top:75px; float:left"></div>
 
         </div>
-        <b class="show_source">Show Source</b>
+        <div class="show_source">Show Source</div>
         <code><pre class="source"></pre></code>
       </div>
 
       <div id="cycle_example" class="example">
         <h2>A more advanced callback</h2>
         <p>When the color is changed a callback is used to change the colors of each letter below.</p>
-        <div class="demo"  style="text-align:left; float:left;">
+        <div style="text-align:left; float:left; height:180px; width:100%">
           <div class="colorwheel" style="text-align:left; float:left; width:200px"></div>
           <div class="cycle" style="float:left; width: 200px; padding:5px; background:#666; margin:40px; font-size:18px; font-weight:bold">These letters will get cycled through... and through...</div>
         </div>
-        <b class="show_source">Show Source</b>
+        <div class="show_source">Show Source</div>
         <code><pre class="source"></pre></code>
       </div>
 
