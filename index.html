@@ -1,1 +1,235 @@
-My GitHub Page
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Color Wheel Demo</title>
+	<script src="javascripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+  <script src="javascripts/raphael-min.js" type="text/javascript"></script>
+  <script src="javascripts/colorwheel.js" type="text/javascript"></script>
+  <style type="text/css" media="screen">
+    body {
+      margin:20px;
+      background:#EFEFEE;
+      font:14px/20px helvetica, arial;
+      width:800px;
+    }
+    input {
+      font-family: monospace;
+      font-size:16px;
+    }
+    .swatch {
+      padding:10px;
+    }
+    .method {
+      margin-bottom:10px;
+    }
+    .code p{margin:0; padding:0; display:none;}
+
+    .source {
+      font-size:10px;
+      line-height:14px;
+    }
+
+    .example {
+      margin:10px 0;
+      padding:10px 0;
+      border-top:2px #CCC solid;
+    }
+
+    .example h2, .example p {
+      margin:0 0 10px;
+    }
+
+    code {
+      display:none;
+      background:#FFF;
+      padding:10px;
+    }
+
+    .show_source {
+      color:#336699;
+      text-decoration:underline;
+      cursor:pointer;
+    }
+
+
+  </style>
+</head>
+
+<body>
+    <div class="demo">
+      <h1>Colorwheel</h1>
+      <p>A color picker coded using <a href="http://raphaeljs.com/">Raphael</a> and <a href="http://jquery.com">jQuery</a>.  The wheel is drawn using the Raphael js library, and jQuery is used to assist with events.</p>
+      <p>The wheel can be resized, since it is drawn on the fly. It supports a small set of callbacks.</p>
+      <div class="code">
+        <h2>Usage and methods</h2>
+        <div class="method">
+        <b>var cw = Raphael.colorwheel(dom_element, height_width);</b>
+        <div>The wheel is drawn into a square, so only one dimension is required</div>
+        </div>
+
+        <div class="method">
+        <b>cw.input(dom_element)</b>
+        <div>Sets a text input for setting and receiving the color as a hex value</div>
+        </div>
+
+        <div class="method">
+        <b>cw.onchange(callback)</b>
+        <div>Set a callback for any change received.  Callback takes one argument, a Rapahel RGB color object.</div>
+        </div>
+
+        <div class="method">
+        <b>cw.ondrag(start, stop)</b>
+        <div>Set a start and stop callback for dragging. Callbacks takes one argument, a Rapahel RGB color object.</div>
+        </div>
+
+        <div class="method">
+        <b>cw.color()</b>
+        <div>Get the current color as RGB object</div>
+        </div>
+
+        <div class="method">
+        <b>cw.color(hex_value)</b>
+        <div>Set the current color via a hex value</div>
+        </div>
+      </div>
+
+      <div id="input_example" class="example">
+        <h2>Input</h2>
+        <p>Assigning an input to a colorwheel will allow the user to directly change the hex color value.</p>
+        <p>When the input is set the colorwheel will set its color to the inputs value</p>
+        <div class="demo">
+          <div class="colorwheel" style="text-align:left;"></div>
+          <input name="input_example" value="#FF9900" size="7">
+        </div>
+        <b class="show_source">Show Source</b>
+        <code><pre class="source"></pre></code>
+      </div>
+
+      <div id="callback_example" class="example">
+        <h2>Callbacks</h2>
+        <p>When the color is changed a callback is used to change the colors of each letter below.</p>
+        <div class="demo">
+          <div style="float:left; width:100%; margin-bottom:20px">
+            <div class="colorwheel" style="float:left; margin-right:20px; width:300px; text-align:left;"></div>
+            <div style="float:left; width:50%">
+              <div class="onchange" style="padding:5px;"></div>
+              <div class="ondrag" style="display:none; padding:5px;">You are dragging the wheel</div>
+            </div>
+          </div>
+        </div>
+        <b class="show_source">Show Source</b>
+        <code><pre class="source"></pre></code>
+      </div>
+
+      <div id="size_example" class="example">
+        <h2>Sizes</h2>
+        <p>The wheel can be scaled to suit your needs</p>
+        <div class="demo" style="float:left; width:100%">
+          <div class="colorwheel_small" style="text-align:left; float:left;margin-right:30px; margin-top:125px"></div>
+          <div class="colorwheel_large" style="text-align:left; float:left;margin-right:30px; float:left;"></div>
+          <div class="colorwheel_medium" style="text-align:left; margin-top:75px; float:left"></div>
+
+        </div>
+        <b class="show_source">Show Source</b>
+        <code><pre class="source"></pre></code>
+      </div>
+
+      <div id="cycle_example" class="example">
+        <h2>A more advanced callback</h2>
+        <p>When the color is changed a callback is used to change the colors of each letter below.</p>
+        <div class="demo">
+          <div class="colorwheel" style="text-align:left;"></div>
+          <div class="cycle" style="padding:5px; background:#FFF; margin:10px 0; font-size:18px; font-weight:bold">These letters will get cycled through... and through...</div>
+        </div>
+        <b class="show_source">Show Source</b>
+        <code><pre class="source"></pre></code>
+      </div>
+
+
+    <script>
+
+      function show_source(target){
+        target.slideDown();
+      }
+
+      function set_source(f, target){
+        f();
+        target.text(f.toString())
+      }
+
+function size_example(){
+  Raphael.colorwheel($("#size_example .colorwheel_small")[0],50).color("#F00");
+  Raphael.colorwheel($("#size_example .colorwheel_medium")[0],150).color("#0F0");
+  Raphael.colorwheel($("#size_example .colorwheel_large")[0],300).color("#00F");
+}
+
+function input_example(){
+  var cw = Raphael.colorwheel($("#input_example .colorwheel")[0],150);
+  cw.input($("#input_example input")[0]);
+}
+
+function callback_example(){
+  var cw = Raphael.colorwheel($("#callback_example .colorwheel")[0],150),
+      onchange_el = $("#callback_example .onchange"),
+      ondrag_el = $("#callback_example .ondrag");
+      cw.color("#F00");
+
+  function start(){ondrag_el.show()}
+  function stop(){ondrag_el.hide()}
+
+  cw.ondrag(start, stop);
+  cw.onchange(function(color)
+    {
+      var colors = [parseInt(color.r), parseInt(color.g), parseInt(color.b)]
+      onchange_el.css("background", color.hex).text("RGB:"+colors.join(", "))
+    })
+
+}
+
+function cycle_example(){
+  var position = 0,
+      letters = [],
+      colorwheel;
+
+
+  function setup_the_letters(){
+    var cycle = $(".cycle"),
+        l = cycle.text().split("");
+
+    cycle.html("");
+
+    for (var i=0; i < l.length; i++) {
+      var letter = $("<span>"+l[i]+"</span>");
+      cycle.append(letter);
+      letters.push(letter);
+    };
+  }
+
+  function update(color){
+    position++;
+    if(position > letters.length-1){ position = 0; }
+    letters[position].css("color", color.hex);
+  }
+
+  colorwheel = Raphael.colorwheel($("#cycle_example .colorwheel")[0],150);
+  setup_the_letters();
+  colorwheel.onchange(update);
+  colorwheel.color("#000");
+}
+
+      $(document).ready(function(){
+        set_source(input_example, $("#input_example .source"))
+        set_source(size_example, $("#size_example .source"))
+        set_source(callback_example, $("#callback_example .source"))
+        set_source(cycle_example, $("#cycle_example .source"))
+        $(".show_source").click(function(){
+          $(this).parents().filter('.example').find("code").slideDown();
+        });
+      })
+    </script>
+</body>
+</html>
