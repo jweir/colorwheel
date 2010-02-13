@@ -73,16 +73,20 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     });
     set_color(target.value);
     update_color(true);
+    
+    return public_methods();
   }
 
   // Sets a callback for when any change occurs
   function onchange(callback){
     change_callback = callback;
     update_color(false);
+    return public_methods();
   }
 
   function ondrag(start_callback, end_callback){
-    drag_callbacks = [start_callback || function(){}, end_callback || function(){}]
+    drag_callbacks = [start_callback || function(){}, end_callback || function(){}];
+    return public_methods();
   }
 
   function drag(e){
@@ -168,7 +172,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
       sdim.l/2 - (sdim.l*hsb.b));
     set_hue_cursor((360*(hsb.h))-90);
     temp.remove();
-    return current_color;
+    return public_methods();;
   }
 
   // Could optimize this method

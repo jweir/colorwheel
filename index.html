@@ -80,7 +80,11 @@
       background:#FFF;
       padding:10px;
     }
-
+    
+    .returns {
+      color:#237210;
+    }
+    
     .show_source {
       margin:20px 0 0;
       color:#999;
@@ -112,27 +116,27 @@
         </div>
 
         <div class="method">
-        <b>cw.input(dom_element)</b>
+        <b>cw.input(dom_element)</b> <span class="returns">&rArr; cw</span>
         <div>Sets a text input for setting and receiving the color as a hex value</div>
         </div>
 
         <div class="method">
-        <b>cw.onchange(callback)</b>
+        <b>cw.onchange(callback)</b> <span class="returns">&rArr; cw</span>
         <div>Set a callback for any change received.  Callback takes one argument, a Raphael RGB color object.</div>
         </div>
 
         <div class="method">
-        <b>cw.ondrag(start, stop)</b>
+        <b>cw.ondrag(start, stop)</b> <span class="returns">&rArr; cw</span>
         <div>Set a start and stop callback for dragging. Callbacks takes one argument, a Raphael RGB color object.</div>
         </div>
 
         <div class="method">
-        <b>cw.color()</b>
+        <b>cw.color()</b> <span class="returns">&rArr; Raphael color object</span>
         <div>Get the current color as RGB object</div>
         </div>
 
         <div class="method">
-        <b>cw.color(hex_value)</b>
+        <b>cw.color(hex_value)</b> <span class="returns">&rArr; cw</span>
         <div>Set the current color via a hex value</div>
         </div>
       </div>
@@ -262,8 +266,7 @@ function cycle_example(){
 
   colorwheel = Raphael.colorwheel($("#cycle_example .colorwheel")[0],150);
   setup_the_letters();
-  colorwheel.onchange(update);
-  colorwheel.color("#864343");
+  colorwheel.onchange(update).color("#864343");
 }
 
       $(document).ready(function(){
