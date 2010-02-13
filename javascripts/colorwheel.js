@@ -1,7 +1,13 @@
 /*
-* Colorwheel 
+* Colorwheel
 * Copyright (c) 2010 John Weir (http://famedriver.com)
 * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
+*
+* requires jQuery & Raphael
+*   http://jquery.com http://raphaeljs.com
+*
+* see http://jweir.github.com/colorwheel for Usage
+*
 */
 
 Raphael.colorwheel = function(target, color_wheel_size, no_segments){
@@ -61,6 +67,8 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   }
 
   // Sets a textfield for user input of hex color values
+  // TODO don't clear the change callback 
+  // TODO allow a null target to unbind the input
   function input(target){
     change_callback = null;
     input_target = target;
@@ -73,11 +81,10 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     });
     set_color(target.value);
     update_color(true);
-    
+
     return public_methods();
   }
 
-  // Sets a callback for when any change occurs
   function onchange(callback){
     change_callback = callback;
     update_color(false);
@@ -110,14 +117,12 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     $(document).mousemove(drag)
     drag_target = target;
     drag(event);
-    // TODO add callback here
     drag_callbacks[0](current_color)
   }
 
   function stop_drag(){
     $(document).unbind("mouseup",stop_drag);
     $(document).unbind("mousemove",drag);
-    // TODO add callback here
     drag_callbacks[1](current_color)
   }
 
@@ -131,7 +136,6 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     $(bs_square.b.node).mousedown(function(e){start_drag(e,bs_square)});
   }
 
-  // rename to cursor
   function cursor_create(size){
     return canvas.set().push(
         canvas.circle(0, 0, size).attr({"stroke-width":4, stroke:"#333"}),
