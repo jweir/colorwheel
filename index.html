@@ -100,6 +100,10 @@
       <p>The wheel size is set on creation. It supports a small set of callbacks.</p>
       <p>It was created for the UI at <a href="http://famedriver.com">Fame Driver</a> and distributed with a MIT license. </p>
       <p>Hope you enjoy it <em>– <a href="mailto:john@famedriver.com">John Weir</a></em></p>
+      <p>
+        <b>&dArr; <a href="http://github.com/jweir/colorwheel/raw/master/javascripts/colorwheel.js">Download</a></b> or <a href="http://github.com/jweir/colorwheel">see the Github</a> page.<br/>
+        Make sure you have jQuery and Raphael.
+      </p>
       <div class="code">
         <h2>Usage and methods</h2>
         <div class="method">
@@ -152,7 +156,7 @@
 
       <div id="callback_example" class="example">
         <h2>Callbacks</h2>
-        <p>When the color is changed a callback is used to change the colors of each letter below.</p>
+        <p>Simple example using the call back to update an element's text and css.</p>
         <div >
           <div style="float:left; width:100%; margin-bottom:20px">
             <div class="colorwheel" style="float:left; margin-right:20px; width:300px; text-align:left;"></div>
@@ -259,7 +263,7 @@ function cycle_example(){
   colorwheel = Raphael.colorwheel($("#cycle_example .colorwheel")[0],150);
   setup_the_letters();
   colorwheel.onchange(update);
-  colorwheel.color("#000");
+  colorwheel.color("#864343");
 }
 
       $(document).ready(function(){
