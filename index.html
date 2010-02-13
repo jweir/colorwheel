@@ -98,7 +98,8 @@
 
 <body>
     <div class="demo">
-      <h1>Colorwheel</h1>
+      <div id="show_off"></div>
+      <h1 class="title">Colorwheel</h1>
       <p>A color picker coded using <a href="http://raphaeljs.com/">Raphael</a> and
         <a href="http://jquery.com">jQuery</a>.  The wheel is drawn using the Raphael js library. jQuery is used to assist with events.</p>
       <p>The wheel size is set on creation. It supports a small set of callbacks.</p>
@@ -117,7 +118,7 @@
 
         <div class="method">
         <b>cw.input(dom_element)</b> <span class="returns">&rArr; cw</span>
-        <div>Sets a text input for setting and receiving the color as a hex value</div>
+        <div>Binds a text input for setting and receiving the color as a hex value.  This will allow the user to input a hex value and update the wheel.</div>
         </div>
 
         <div class="method">
@@ -270,6 +271,7 @@ function cycle_example(){
 }
 
       $(document).ready(function(){
+        Raphael.colorwheel($("#show_off")[0],100).color("#FF6600").onchange(function(c){$(".title").css("color",c.hex)});
         set_source(input_example, $("#input_example .source"))
         set_source(size_example, $("#size_example .source"))
         set_source(callback_example, $("#callback_example .source"))
