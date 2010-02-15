@@ -53,8 +53,12 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     bs_square.cursor = cursor_create(tri_size*0.5);
     events_setup();
     parent.css({height:size+"px", width:size+"px"});
-
+    disable_select(parent);
     return public_methods();
+  }
+
+  function disable_select(target){
+    $(target).css({"unselectable": "on","-moz-user-select": "none","-webkit-user-select": "none"});
   }
 
   function public_methods(){
