@@ -136,15 +136,19 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   }
 
   function events_setup(){
-    $(hue_ring.event.node).mousedown(function(e){start_drag(e,hue_ring)});
-    $(bs_square.b.node).mousedown(function(e){start_drag(e,bs_square)});
+    $([hue_ring.event.node,hue_ring.cursor[0].node]).mousedown(function(e){start_drag(e,hue_ring)});
+    $([bs_square.b.node, bs_square.cursor[0].node]).mousedown(function(e){start_drag(e,bs_square)});
   }
 
   function cursor_create(size){
-    return canvas.set().push(
+    var set = canvas.set().push(
         canvas.circle(0, 0, size).attr({"stroke-width":4, stroke:"#333"}),
         canvas.circle(0, 0, size+2).attr({"stroke-width":1, stroke:"#FFF", opacity:0.5})
-    )
+    );
+
+    set[0].node.style.cursor = "crosshair";
+
+    return set;
   }
 
   function set_bs_cursor(x,y){
