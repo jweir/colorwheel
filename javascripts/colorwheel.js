@@ -258,7 +258,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     var hue = d*(255/k);
 
     n.rotate((360/k)*d, (size/2), size/2);
-    n.attr({fill:"hsb("+d*(1/k)+", 1, 0.85)"})
+    n.attr({"stroke-width":0, fill:"hsb("+d*(1/k)+", 1, 0.85)"})
     hue_ring.hues.push(n)
   }
 
