@@ -194,10 +194,11 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
           s: (x-sdim.x)/sdim.l,
           h: hue()
         };
-    current_color = Raphael.getRGB("hsb("+hsb.h+","+hsb.s+","+hsb.b+")");
+
+    current_color = Raphael.hsb2rgb(hsb.h, hsb.s,hsb.b);
 
     if(input_target){
-      var c = Raphael.getRGB("hsb("+hsb.h+","+hsb.s+","+hsb.b+")").hex;
+      var c = current_color.hex;
       if(dont_replace_input_value != true) input_target.value = c;
       if(hsb.b < 0.5){
         $(input_target).css("color", "#FFF");
