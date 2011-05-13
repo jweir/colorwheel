@@ -75,11 +75,10 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     change_callback = null;
     input_target = target;
     $(target).keyup(function(){
-        this.value = "#"+this.value.replace(/^#/,"");
-        if(this.value.match(/^#([0-9A-F]){3}$|^#([0-9A-F]){6}$/img)){
-          set_color(this.value);
-          update_color(true);
-        }
+      if(this.value.match(/^#([0-9A-F]){3}$|^#([0-9A-F]){6}$/img)){
+        set_color(this.value);
+        update_color(true);
+      }
     });
     set_color(target.value);
     update_color(true);
