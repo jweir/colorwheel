@@ -64,12 +64,12 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
       input: input,
       onchange: onchange,
       ondrag : ondrag,
-      color : set_color
+      color : public_set_color
     };
   }
 
   // Sets a textfield for user input of hex color values
-  // TODO don't clear the change callback 
+  // TODO don't clear the change callback
   // TODO allow a null target to unbind the input
   function input(target){
     change_callback = null;
@@ -170,10 +170,15 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     return Raphael.rgb2hsb(bs_square.h.attr("fill")).h;
   }
 
+  function public_set_color(value){
+    var ret = set_color(value);
+    update_color(false);
+    return ret;
+  }
+
   function set_color(value){
-    if(value === undefined){
-      return current_color;
-    }
+    if(value === undefined){ return current_color; }
+
     var temp = canvas.rect(1,1,1,1).attr({fill:value}),
         hsb = canvas.raphael.rgb2hsb(temp.attr("fill"));
 
@@ -199,8 +204,8 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
 
     if(input_target){
       var c = current_color.hex;
-      if(dont_replace_input_value != true) input_target.value = c;
-      if(hsb.b < 0.5){
+      if(dont_replace_input_value != true) { input_target.value = c;}
+       if(hsb.b < 0.5){
         $(input_target).css("color", "#FFF");
       } else {
         $(input_target).css("color", "#000");
