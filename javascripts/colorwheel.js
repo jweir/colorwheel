@@ -78,6 +78,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
       if(this.value.match(/^#([0-9A-F]){3}$|^#([0-9A-F]){6}$/img)){
         set_color(this.value);
         update_color(true);
+		run_onchange_event();
       }
     });
     set_color(target.value);
@@ -104,11 +105,13 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     if(drag_target == hue_ring){
       set_hue_cursor(x,y);
       update_color();
+	  run_onchange_event();
       return true;
     }
     if(drag_target == bs_square){
       set_bs_cursor(x,y);
       update_color();
+	  run_onchange_event();
       return true;
     }
   }
@@ -125,6 +128,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     $(document).unbind("mouseup",stop_drag);
     $(document).unbind("mousemove",drag);
     drag_callbacks[1](current_color);
+	run_onchange_event();
   }
 
   function event_drag_stop(event,o){
@@ -212,9 +216,6 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
       input_target.style.background = c;
     }
 
-    if(change_callback != undefined){
-      change_callback(current_color);
-    }
   }
 
   // accepts either x,y or d (degrees)
@@ -291,6 +292,12 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
       center-tri_size-padding).attr({"stroke":"#000", "stroke-width":(tri_size*2)+3, opacity:0.1});
     hue_ring.outline.toBack();
     hue_ring.event.node.style.cursor = "crosshair";
+  }
+
+  function run_onchange_event(){
+	if (change_callback != undefined){
+      change_callback(current_color);
+    }	
   }
 
   return create(target, color_wheel_size);
