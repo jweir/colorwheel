@@ -160,7 +160,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     if(y < sdim.y) y = sdim.y;
     if(y > sdim.y+sdim.l) y = sdim.y + sdim.l;
 
-    bs_square.cursor.attr({cx:x, cy:y}).translate(0,0);
+    bs_square.cursor.attr({cx:x, cy:y}).transform("t0,0");
   }
 
 
@@ -229,7 +229,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
 
     var x = Math.cos(radians(d)) * (center-tri_size-padding);
     var y = Math.sin(radians(d)) * (center-tri_size-padding);
-    hue_ring.cursor.attr({cx:x+center, cy:y+center}).translate(0,0);
+    hue_ring.cursor.attr({cx:x+center, cy:y+center}).transform("t0,0");
     set_hue("hsb("+(d+90)/360+",1,1)");
   }
 
@@ -266,14 +266,19 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     var n = r.clone();
     var hue = d*(255/k);
 
-    n.rotate((360/k)*d, (size/2), size/2);
+    var s = size/2,
+      t = tri_size,
+      p = padding;
+
+    n.transform("t"+s+","+(s-t)+"r"+(360/k)*d+"t0,-"+(s-t-p)+"");
+
     n.attr({"stroke-width":0, fill:"hsb("+d*(1/k)+", 1, 0.85)"});
     hue_ring.hues.push(n);
   }
 
   function create_hue_ring(){
     var s = hue_segement_shape(),
-        tri = canvas.path(s).attr({stroke:null}).translate(size/2, padding),
+        tri = canvas.path(s).attr({stroke:"rgba(0,0,0,0)"}).transform("t"+(size/2)+","+padding),
         k = segments; // # of segments to use to generate the hues
 
     hue_ring.hues = canvas.set();
@@ -297,7 +302,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   function run_onchange_event(){
 	if (change_callback != undefined){
       change_callback(current_color);
-    }	
+    }
   }
 
   return create(target, color_wheel_size);
