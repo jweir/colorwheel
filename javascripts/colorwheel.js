@@ -137,11 +137,6 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     run_onchange_event();
   }
 
-  function event_drag_stop(event,o){
-    o.mousemove = null;
-    drag_target=null;
-  }
-
   function events_setup(){
     $([hue_ring.event.node,hue_ring.cursor[0].node]).on("mousedown touchstart",
                                                         function(e){start_drag(e,hue_ring);});
