@@ -99,36 +99,42 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   }
 
   function drag(e){
-    var x = e.pageX - (parent.offset().left + center),
-        y = e.pageY - (parent.offset().top + center);
+    var x, y, page;
+
+    e.preventDefault(); // prevents scrolling on touch
+
+    page = e.originalEvent.touches ? e.originalEvent : e;
+
+    x = page.pageX - (parent.offset().left + center);
+    y = page.pageY - (parent.offset().top + center);
 
     if(drag_target == hue_ring){
       set_hue_cursor(x,y);
       update_color();
-	  run_onchange_event();
+      run_onchange_event();
       return true;
     }
     if(drag_target == bs_square){
       set_bs_cursor(x,y);
       update_color();
-	  run_onchange_event();
+      run_onchange_event();
       return true;
     }
   }
 
   function start_drag(event, target){
-    $(document).mouseup(stop_drag);
-    $(document).mousemove(drag);
+    $(document).on('mouseup touchend',stop_drag);
+    $(document).on('mousemove touchmove',drag);
     drag_target = target;
     drag(event);
     drag_callbacks[0](current_color);
   }
 
   function stop_drag(){
-    $(document).unbind("mouseup",stop_drag);
-    $(document).unbind("mousemove",drag);
+    $(document).off("mouseup touchend",stop_drag);
+    $(document).off("mousemove touchmove",drag);
     drag_callbacks[1](current_color);
-	run_onchange_event();
+    run_onchange_event();
   }
 
   function event_drag_stop(event,o){
@@ -137,8 +143,10 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   }
 
   function events_setup(){
-    $([hue_ring.event.node,hue_ring.cursor[0].node]).mousedown(function(e){start_drag(e,hue_ring);});
-    $([bs_square.b.node, bs_square.cursor[0].node]).mousedown(function(e){start_drag(e,bs_square);});
+    $([hue_ring.event.node,hue_ring.cursor[0].node]).on("mousedown touchstart",
+                                                        function(e){start_drag(e,hue_ring);});
+    $([bs_square.b.node, bs_square.cursor[0].node]).on("mousedown touchstart",
+                                                       function(e){start_drag(e,bs_square);});
   }
 
   function cursor_create(size){
