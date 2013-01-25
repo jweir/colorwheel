@@ -185,13 +185,13 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   function set_color(value){
     if(value === undefined){ return current_color; }
 
-    var temp = canvas.rect(1,1,1,1).attr({fill:value}),
-        hsb = canvas.raphael.rgb2hsb(temp.attr("fill"));
+    var temp = canvas.rect(1,1,1,1).attr({fill:value});
+    var hsb = tinycolor(value).toHsv();
 
     set_bs_cursor(
       (0-sdim.l/2) + (sdim.l*hsb.s),
-      sdim.l/2 - (sdim.l*hsb.b));
-    set_hue_cursor((360*(hsb.h))-90);
+      sdim.l/2 - (sdim.l*hsb.v));
+    set_hue_cursor(((hsb.h))-90);
     temp.remove();
     return public_methods();
   }
