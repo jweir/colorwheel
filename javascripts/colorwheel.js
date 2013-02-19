@@ -162,10 +162,10 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   function set_bs_cursor(x,y){
     x = x+center;
     y = y+center;
-    if(x < sdim.x) x = sdim.x;
-    if(x > sdim.x+sdim.l) x = sdim.x+sdim.l;
-    if(y < sdim.y) y = sdim.y;
-    if(y > sdim.y+sdim.l) y = sdim.y + sdim.l;
+    if(x < sdim.x){x = sdim.x}
+    if(x > sdim.x+sdim.l){x = sdim.x+sdim.l}
+    if(y < sdim.y){y = sdim.y}
+    if(y > sdim.y+sdim.l){y = sdim.y + sdim.l}
 
     bs_square.cursor.attr({cx:x, cy:y}).transform("t0,0");
   }
@@ -214,7 +214,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
 
     if(input_target){
       var c = current_color.hex;
-      if(dont_replace_input_value != true) { input_target.value = c;}
+      if(dont_replace_input_value !== true) { input_target.value = c;}
        if(hsb.b < 0.5){
         $(input_target).css("color", "#FFF");
       } else {
@@ -307,7 +307,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   }
 
   function run_onchange_event(){
-	if (change_callback != undefined){
+	if (change_callback !== undefined){
       change_callback(current_color);
     }
   }
