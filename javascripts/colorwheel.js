@@ -103,7 +103,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
 
     e.preventDefault(); // prevents scrolling on touch
 
-    page = e.originalEvent.touches ? e.originalEvent : e;
+    page = e.originalEvent.touches ? e.originalEvent.touches[0] : e;
 
     x = page.pageX - (parent.offset().left + center);
     y = page.pageY - (parent.offset().top + center);
@@ -123,6 +123,8 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
   }
 
   function start_drag(event, target){
+    event.preventDefault(); // prevents scrolling on touch
+
     $(document).on('mouseup touchend',stop_drag);
     $(document).on('mousemove touchmove',drag);
     drag_target = target;
@@ -130,7 +132,9 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     drag_callbacks[0](current_color);
   }
 
-  function stop_drag(){
+  function stop_drag(event){
+    event.preventDefault(); // prevents scrolling on touch
+
     $(document).off("mouseup touchend",stop_drag);
     $(document).off("mousemove touchmove",drag);
     drag_callbacks[1](current_color);
