@@ -1,0 +1,29 @@
+{
+  "name": "Colorwheel",
+  "version": "1.0.0",
+  "author": "J. Weir <john@famedriver.com>",
+  "contributors": [
+    {
+      "name": "Jesse Ikonen"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "dependencies": {
+    "jquery": "2.0.3",
+    "raphael": "2.0.1"
+  },
+  "ignore": [
+    "/*.*",
+    "README",
+    "javascripts/raphael*.js",
+    "test"
+  ],
+  "keywords": [
+    "color picker"
+  ]
+}
