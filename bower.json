@@ -1,7 +1,8 @@
 {
-  "name": "Colorwheel",
+  "name": "colorwheel",
   "version": "1.0.0",
   "author": "J. Weir <john@famedriver.com>",
+  "main": "colorwheel.js",
   "contributors": [
     {
       "name": "Jesse Ikonen"
@@ -14,11 +15,15 @@
     }
   ],
   "dependencies": {
-    "jquery": "2.0.3",
-    "raphael": "2.0.1"
+    "jquery": ">= 1.4.1",
+    "raphael": ">= 2.1.0"
+  },
+  "devDependencies": {
+    "qunit": ">= 1.14"
   },
   "ignore": [
-    "/*.*",
+    "/*.html",
+    "/*.json",
     "README",
     "javascripts/raphael*.js",
     "test"
