@@ -209,7 +209,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
         // Allow v (value) instead of b (brightness), as v is sometimes
         // used by Raphael.
         if(hsb.b === undefined){ hsb.b = hsb.v; }
-        var rgb = canvas.raphael.hsb2rgb(hsb.h, hsb.s, hsb.v);
+        var rgb = canvas.raphael.hsb2rgb(hsb.h, hsb.s, hsb.b);
         hex = rgb.hex;
     } else {
         hex = value;
