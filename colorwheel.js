@@ -239,14 +239,15 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     current_color = Raphael.hsb2rgb(hsb.h, hsb.s,hsb.b);
 
     if(input_target){
-      var c = current_color.hex;
-      if(dont_replace_input_value !== true) { input_target.value = c;}
-       if(hsb.b < 0.5){
+      var c = current_color;
+      if(dont_replace_input_value !== true) { input_target.value = c.hex;}
+      var bal = (c.r * 0.299 + c.g * 0.587 + c.b * 0.114) / 255;
+      if(bal< 0.5){
         $(input_target).css("color", "#FFF");
       } else {
         $(input_target).css("color", "#000");
       }
-      input_target.style.background = c;
+      input_target.style.background = c.hex;
     }
 
   }
