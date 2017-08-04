@@ -284,10 +284,15 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
     bs_square.h = canvas.rect.apply(canvas, box).attr({
       stroke:"#EEE", gradient: "0-#FFF-#000", opacity:1});
     bs_square.s = canvas.rect.apply(canvas, box).attr({
-      stroke:null, gradient: "0-#FFF-#FFF", opacity:0});
+      stroke:null, gradient: "0-#FFF-rgba(255,255,255,0)", opacity:0});
     bs_square.b = canvas.rect.apply(canvas, box).attr({
-      stroke:null, gradient: "90-#000-#FFF", opacity:0});
+      stroke:null, gradient: "90-#000-rgba(255,255,255,0)", opacity:0});
     bs_square.b.node.style.cursor = "crosshair";
+    // Raphael 2.1.4 does not set stop-opacity when gradient is specified with rgba
+    // PR https://github.com/DmitryBaranovskiy/raphael/pull/978 fixed this issue
+    // The following lines are a temporary fix which can be removed if the PR lands in Raphael.
+    $('#10-_FFF-rgba_255_255_255_0_ stop:last-child').attr('stop-opacity', 0);
+    $('#290-_000-rgba_255_255_255_0_ stop:last-child').attr('stop-opacity', 0);
   }
 
   function hue_segement_shape(){
