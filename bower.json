@@ -1,6 +1,6 @@
 {
   "name": "colorwheel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "J. Weir <john@famedriver.com>",
   "main": "colorwheel.js",
   "contributors": [
@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "jquery": ">= 1.4.1",
-    "raphael": ">= 2.1.0"
+    "raphael": "2.0.0 - 2.1.4"
   },
   "devDependencies": {
     "qunit": ">= 1.14"
